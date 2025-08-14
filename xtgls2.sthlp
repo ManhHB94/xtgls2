@@ -1,7 +1,7 @@
 
 {smcl}
-{* *! version 1.2, 09 Aug 2025}{...}
-{cmd:help xtgls2}		Version 1.2, 10 Aug 2025, Manh Hoang Ba (hbmanh9492@gmail.com)
+{* *! version 1.3, 15 Aug 2025}{...}
+{cmd:help xtgls2}		Version 1.3, 15 Aug 2025, Manh Hoang Ba (hbmanh9492@gmail.com)
 {hline}
 
 {title:Title}
