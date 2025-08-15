@@ -1,2 +1,0 @@
-v 1.3
-p xtgls2 xtgls2
