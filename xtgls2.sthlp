@@ -13,7 +13,7 @@
 
 {title:Syntax}
 
-{pstd}{cmd:xtgls2} {varlist} {ifin} [{cmd:,} {cmdab:nocon:stant} {cmd:ols} {cmd:fe} {cmd:fd} {cmdab:c:ov(c|h)} {cmdab:cl:uster(varname)} {cmd:nmk} {cmd:minus(}{it:num}{cmd:)}
+{p 4 8 2}{cmd:xtgls2} {varlist} {ifin} [{cmd:,} {cmdab:nocon:stant} {cmd:ols} {cmd:fe} {cmd:fd} {cmdab:c:ov(c|h)} {cmdab:cl:uster(varname)} {cmd:nmk} {cmd:minus(}{it:num}{cmd:)}
 {cmdab:l:evel(}{it:num}{cmd:)} {cmd:igls} {cmdab:iter:ate(}{it:num}{cmd:)} {cmdab:tol:erance(}{it:num}{cmd:)} {cmdab:nolo:g} {cmdab:lo:g}]
 
 
@@ -24,6 +24,8 @@
 {pstd}Specifically, in each estimator, the error covariance matrix is assumed to have a general form within panels, and identical across panels. For more details, see Kiefer (1980) and Wooldridge (2002, 2010).{p_end}
 
 {pstd}{cmd:xtgls2} is appropriate for balanced panel data with {cmd:N >> T} and data must be {help xtset}.{p_end}
+
+{p 4 8 2}The latest version of {cmd:xtgls2} can be found at the following link: {browse "https://github.com/ManhHB94/":https://github.com/ManhHB94/}{p_end}
 
 {synoptset 25 tabbed}{...}
 {synopthdr}
@@ -54,6 +56,12 @@
 
 {synoptline}
 {p2colreset}{...}
+
+{title:Citation}
+{p 4 8 2}{cmd:xtgls2} is not an official Stata command.
+It is a free contribution to the research community.
+Please cite it as such: {p_end}
+{p 8 8 2}Hoang Ba Manh, 2025. "XTGLS2: Stata module to estimate GLS estimator for large N, small T panel data models," Statistical Software Components S459497, Boston College Department of Economics, revised 15 Aug 2025.{p_end}
 
 {title:Postestimation}
 
