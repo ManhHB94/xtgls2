@@ -1,4 +1,4 @@
-* Version 1.4 in 29 Aug 2025, Manh Hoang Ba (hbmanh9492@gmail.com)
+* Version 1.4 in 29 Sep 2025, Manh Hoang Ba (hbmanh9492@gmail.com)
 * Following by Kiefer (1980); Wooldridge (2002, 2010)
 * Version 1.1 to allow iterated GLS.
 * Version 1.2 cov(h) and (fe or fd) are not specified together,
@@ -439,3 +439,4 @@ program define xtglsr_modified
 	xtgls,
 
 end
+
