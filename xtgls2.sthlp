@@ -1,7 +1,7 @@
 
 {smcl}
-{* *! version 1.4, 29 Aug 2025}{...}
-{cmd:help xtgls2}		Version 1.4, 29 Aug 2025, Manh Hoang Ba (hbmanh9492@gmail.com)
+{* *! version 1.4, 29 Sep 2025}{...}
+{cmd:help xtgls2}		Version 1.4, 29 Sep 2025, Manh Hoang Ba (hbmanh9492@gmail.com)
 {hline}
 
 {title:Title}
@@ -121,6 +121,7 @@ Please cite it as such: {p_end}
 {title:Also see}
 
 {pstd}Online: help for {help xtgls}, {help xtglsr} {if installed}, {help xttest3} (if installed), {help xttest4} (if installed).
+
 
 
 
