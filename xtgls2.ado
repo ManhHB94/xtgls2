@@ -1,9 +1,10 @@
-* Version 1.3 in 15 Aug 2025, Manh Hoang Ba (hbmanh9492@gmail.com)
+* Version 1.4 in 29 Aug 2025, Manh Hoang Ba (hbmanh9492@gmail.com)
 * Following by Kiefer (1980); Wooldridge (2002, 2010)
 * Version 1.1 to allow iterated GLS.
 * Version 1.2 cov(h) and (fe or fd) are not specified together,
 *				and correct number of iterations.
 * Version 1.3 to allow combination with bootstrap command.
+* Version 1.4 to allow IC and lrtest after iterated GLS.
 
 cap program drop xtgls2
 program define xtgls2, eclass
@@ -103,8 +104,8 @@ program define xtgls2, eclass
 			sort `ivar' `tvar'
 			foreach var of varlist `varlist1' {
 				tempvar `var'_m `var'_dm
-				qui by `ivar': egen ``var'_m' = mean(`var') if `touse'
-				qui gen ``var'_dm' = `var' - ``var'_m' if `touse'
+				qui by `ivar': egen double ``var'_m' = mean(`var') if `touse'
+				qui gen ``var'_dm' double = `var' - ``var'_m' if `touse'
 				local varlist2 `varlist2' ``var'_dm'
 			}
 		}
@@ -129,7 +130,7 @@ program define xtgls2, eclass
 			sort `ivar' `tvar'
 			foreach var of varlist `varlist1' {
 				tempvar `var'_d
-				qui gen ``var'_d' = d.`var' if `touse'
+				qui gen double ``var'_d' = d.`var' if `touse'
 				local varlist2 `varlist2' ``var'_d'
 			}
 			local gap_out : word 1 of `varlist2'
@@ -211,12 +212,12 @@ program define xtgls2, eclass
 		tempvar xb xb_m xb_dm y_m y_dm
 		tempname r2_o r2_w r2_b
 		
-		qui predict `xb' if `touse'
+		qui predict double `xb' if `touse'
 		qui sort `ivar' `tvar'
-		qui by `ivar': egen `xb_m'=mean(`xb') if `touse'
-		qui by `ivar': egen `y_m'=mean(`depvar') if `touse'
-		qui gen `xb_dm' = `xb' - `xb_m' if `touse'
-		qui gen `y_dm' = `depvar' - `y_m' if `touse'
+		qui by `ivar': egen double `xb_m'=mean(`xb') if `touse'
+		qui by `ivar': egen double `y_m'=mean(`depvar') if `touse'
+		qui gen double `xb_dm' = `xb' - `xb_m' if `touse'
+		qui gen double `y_dm' = `depvar' - `y_m' if `touse'
 		
 		*		Overall
 		qui corr `depvar' `xb' if `touse'
@@ -232,13 +233,16 @@ program define xtgls2, eclass
 		
 		// Save resuls
 		*	-	Scalars
-		tempname N N_g N_t n_cv df df_pear chi2 rank N_clust Sigma
+		tempname N N_g N_t n_cv df df_pear df_ic ll chi2 rank N_clust Sigma
 					
 		scalar `N'=e(N)
 		scalar `N_g'=e(N_t)
 		scalar `N_t'=e(N_g)
 		scalar `n_cv'=e(n_cv)
 		scalar `df'=e(df)
+		scalar `df_pear' = e(df_pear)
+		scalar `df_ic' = e(df_ic)
+		scalar `ll' = e(ll)
 		scalar `chi2'=e(chi2)
 		scalar `rank'=e(rank)
 		scalar `N_clust'=e(N_clust)
@@ -266,6 +270,9 @@ program define xtgls2, eclass
 		ereturn scalar N_t=`N_t'
 		ereturn scalar n_cv=`n_cv'
 		ereturn scalar df=`df'
+		ereturn scalar df_pear = `df_pear'
+		ereturn scalar df_ic = `df_ic'
+		ereturn scalar ll = `ll'
 		ereturn scalar chi2=`chi2'
 		ereturn scalar rank=`rank'
 		ereturn scalar level = `level'
@@ -354,7 +361,7 @@ end
 
 *	Define xtglsr_modified command
 *		Modified from xtglsr command (Kolev, 2013)
-*			for allowing time series operator and cluster-robust in this case.
+*			to allowing time series operator and cluster-robust in this case.
 
 cap program drop xtglsr_modified
 program define xtglsr_modified
