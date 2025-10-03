@@ -4,7 +4,8 @@
 * Version 1.2 cov(h) and (fe or fd) are not specified together,
 *				and correct number of iterations.
 * Version 1.3 to allow combination with bootstrap command.
-* Version 1.4 to speed up IGLS; fix rounding error in FEGLS and FDGLS
+* Version 1.4 to speed up IGLS; allow IC and lrtest after IGLS; 
+*				and fix rounding error in FEGLS and FDGLS
 
 cap program drop xtgls2
 program define xtgls2, eclass
@@ -142,68 +143,14 @@ program define xtgls2, eclass
 			di in red "option {bf:cov()} incorrectly specified"
 			exit 198
 		}
-		
-*	//	Check for iterated GLS		********** <--- iterated GLS!
-/*
-		if `iterate' < 1 {
-			noi di in red `"iterate() must be positive"'
-			exit 198
-		}
-
-		local tol `tolerance'
-		local diff = `tol' + 1
-		local iter = 0
-		*local iter1 = `iter'+1
-		tempname bold beta
-		
-		_parse_iterlog, `log' `nolog'
-		local log "`s(nolog)'"
-		local qqq = cond("`log'"!="", "quietly", "noisily")
-*/		
+	
 		// Perform Gerneral GLS
 		qui xtset `tvar' `ivar'
 		
-		*		Iterated GLS
+		*		(Iterated) GLS
 		_xtgls275 `varlist2' if `touse', p(`cov') `noconstant' `nmk' ///
 					tolerance(`tolerance') iter(`iterate') `igls'
-/*					
-		while `iter' < `iterate' & `diff' > `tol' {
-			
-			if `"`igls'"' == `""' {
-				local diff = 0
-			}
-			
-			local iter1 = `iter'+1
-			
-			if `iter1'==1 {
-				qui xtgls `varlist2' if `touse', p(`cov') `noconstant' `nmk'
-				mat `bold'=e(b)
-			}
-			else {
-				qui xtgls `varlist2' if `touse', p(`cov') `noconstant' `nmk' ///
-					tolerance(`tol') iter(`iter1') `igls'
-				local diff = mreldif(e(b), `bold')
-				mat `bold' = e(b)
-				
-				if `iter1' < 11 local space " "
-				else local space ""
-				
-				if `iter1' == 2 {
-					`qqq' di
-				}
-				`qqq' di in gr "Iteration " `=`iter1'-1' ///
-					":`space' Tolerance = " in ye `diff'
-			}
-			local iter = `iter'+1
-		}
 		
-		if `diff' > `tol' {
-			noi di in red "Convergence not achieved!"
-		}
-		else if "`igls'"!="" {
-			di _n in ye "Convergenced after `iter1' iterations"
-		}
-*/		
 		*		Cluster-robust COV
 		if "`cluster'" != "" {
 			qui xtglsr_modified, cluster(`cluster') minus(`minus')
@@ -362,9 +309,11 @@ program define xtgls2, eclass
 end
 
 
+*************************************************************************
 *	Define xtglsr_modified command
 *		Modified from xtglsr command (Kolev, 2013)
 *			to allowing time series operator and cluster-robust in this case.
+*************************************************************************
 
 cap program drop xtglsr_modified
 program define xtglsr_modified
