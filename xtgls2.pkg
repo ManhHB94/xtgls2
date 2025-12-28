@@ -1,6 +1,6 @@
-v 1.5
+v 1.6
 d xtgls2 — Feasible General GLS for panel data
 d Author: Manh Hoang Ba
-d Version: 1.5 19 Nov 2025
+d Version: 1.6 28 Dec 2025
 f xtgls2.ado
 f xtgls2.sthlp
