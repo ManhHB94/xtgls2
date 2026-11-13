@@ -1,4 +1,4 @@
-v 1.7
+v 2.0
 d Package index for xtgls2
-d Updated: 17 Jan 2026
+d Updated: 12 Nov 2026
 p xtgls2
