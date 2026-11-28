@@ -65,7 +65,7 @@ and the panel observed in a subset of the periods is weighted by the correspondi
 {pstd}To update the {cmd:xtgls2} package to the latest version, run either of the following commands{p_end}
 {phang2}. {stata `"ssc install xtgls2, replace"'}{p_end}
 {phang2}. {stata `"ado update xtgls2, update"'}{p_end}
-{phang2}. {stata `"net install xtgls2, from("https://raw.githubusercontent.com/ManhHB94/xtgls2/main/") replace"'}{p_end}
+{phang2}. {stata `"net install xtgls2, from("https://manhhb94.github.io/xtgls2/") replace"'}{p_end}
 
 
 {title:Options}
